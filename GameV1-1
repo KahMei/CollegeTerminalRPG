@@ -1,0 +1,116 @@
+import java.util.Scanner;
+
+/*
+ * Version 1.1
+ * 	Code Re-Factored to prevent incremental recursion.
+ * 	
+ * 
+ */
+
+public class GameOriginal {
+	
+	public enum GameState {
+		Menu, Game, Lose, Win
+	}
+	
+	public enum Location { //Placeholder Locations
+		Campus, Library
+	}
+	
+	
+	static GameState gState = GameState.Menu;
+	static Location gameLoc;
+	
+	public static void MainMenu(Scanner scnr) { // First thing user sees
+		String userInput;
+		
+		gState = GameState.Menu;
+		System.out.println("This is the Main Menu.");
+		System.out.println("Type Start, Help or Quit");
+		userInput = scnr.nextLine();
+		
+		if (userInput.contains("Start") || userInput.contains("start")) { // Starts game
+			StartGame();
+		}
+		else if (userInput.contains("Help") || userInput.contains("help")) { // Shows help menu with commands
+			HelpMenu();
+		}
+		else if (userInput.contains("Quit") || userInput.contains("quit")) { // Terminates program
+			System.out.println("Quitting Game.");
+			System.exit(0);
+		}
+		else {
+			System.out.println("Invalid choice, Please try again.");
+		}
+	}
+	
+	public static void HelpMenu() {
+		System.out.println("Once the game has started, type \"Enter, Open, Talk, Look or Grab\" to make a choice");
+		System.out.println("Type Help at any point during the game to show an abridged version of this menu.");
+		System.out.println("Type \"Quit\" at any time to go back to the main menu.\n");
+	}
+	
+	public static void UserInput(Scanner scnr) {
+		String tempString;
+		
+ 		if (gState == GameState.Menu) { // Goes to the main menu if userInput is called during the Menu State.
+ 			MainMenu(scnr);
+ 		}
+		else if (gState == GameState.Game) { // Allows user to choose options for the game.
+			
+			System.out.println("What would you like to do?");
+			tempString = scnr.nextLine();
+			
+			if (tempString.contains("Enter") || tempString.contains("enter")) {
+				//TODO Enter
+				System.out.println("Enter");
+			}
+			else if (tempString.contains("Open") || tempString.contains("open")) {
+				//TODO Open
+				System.out.println("Open");
+			}
+			else if (tempString.contains("Talk") || tempString.contains("talk")) {
+				//TODO Talk
+				System.out.println("Talk");
+			}
+			else if (tempString.contains("Grab") || tempString.contains("grab")) {
+				//TODO Grab
+				System.out.println("Grab");
+			}
+			else if (tempString.contains("Look") || tempString.contains("look")) {
+				//TODO Look
+				System.out.println("Look");
+			}
+			else if (tempString.contains("Help") || tempString.contains("help")) {
+				HelpMenu();
+			}
+			else if (tempString.contains("Quit") || tempString.contains("quit")) { // Changes state and goes back to the main menu
+				gState = GameState.Menu;
+			}
+			else {
+				System.out.println("Invalid choice, Please try again.");
+			}
+		}
+		else if (gState == GameState.Win) {
+			//TODO
+		}
+		else if (gState == GameState.Lose) {
+			//TODO
+		}
+	}
+	
+	public static void StartGame() {
+		gState = GameState.Game;
+		gameLoc = Location.Campus;
+		System.out.println("Started Game");
+		System.out.println(gState + " " + gameLoc);
+	}
+	
+	public static void main(String[] args) {
+		Scanner scnr = new Scanner(System.in);
+		
+		while (true) {
+			UserInput(scnr);
+		}
+	}
+}
